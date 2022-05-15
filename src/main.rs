@@ -2,13 +2,13 @@ extern crate enigo;
 extern crate gilrs;
 
 use enigo::*;
-use gilrs::{Gilrs, Event, EventType, Button};
+use gilrs::{Button, Event, EventType, Gilrs, Axis};
 
 fn main() {
     println!("Hello, world!");
 
     // Input provided by Gilrs
-    let mut gilrs = Gilrs::new();
+    let mut gilrs = Gilrs::new().unwrap();
 
     // Output provided by Enigo
     let mut enigo = Enigo::new();
@@ -16,15 +16,18 @@ fn main() {
     // Event loop
     loop {
         while let Some(Event { event, .. }) = gilrs.next_event() {
-            if let EventType::ButtonPressed(button, ..) = event{
-                match button{
+            match event {
+                EventType::ButtonPressed(button, ..) => match button {
                     Button::South => enigo.key_sequence("b"),
                     Button::West => enigo.key_click(Key::LeftArrow),
                     Button::East => enigo.key_click(Key::RightArrow),
                     _ => (),
-                };
-            }
+                },
+                EventType::AxisChanged(Axis::LeftStickY, x, _) => {
+                    enigo.mouse_scroll_y((x * 1.2) as i32)
+                }
+                _ => println!("Event: {:?}", event),
+            };
         }
     }
 }
-
