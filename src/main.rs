@@ -21,6 +21,7 @@ fn main() {
                     Button::South => enigo.key_click(Key::DownArrow),
                     Button::West => enigo.key_click(Key::LeftArrow),
                     Button::East => enigo.key_click(Key::RightArrow),
+                    Button::North => enigo.key_click(Key::UpArrow),
                     _ => (),
                 },
                 EventType::AxisChanged(Axis::LeftStickY, x, _) => {
