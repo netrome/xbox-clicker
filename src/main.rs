@@ -18,7 +18,7 @@ fn main() {
         while let Some(Event { event, .. }) = gilrs.next_event() {
             match event {
                 EventType::ButtonPressed(button, ..) => match button {
-                    Button::South => enigo.key_sequence("b"),
+                    Button::South => enigo.key_click(Key::DownArrow),
                     Button::West => enigo.key_click(Key::LeftArrow),
                     Button::East => enigo.key_click(Key::RightArrow),
                     _ => (),
